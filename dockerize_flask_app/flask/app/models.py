@@ -8,6 +8,10 @@ class Person(db.Model):
     name = db.Column(db.String(20))
     pets = db.relationship('Pet', backref='owner')  # one-to-many
 
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+
 
 class Pet(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -16,6 +20,10 @@ class Pet(db.Model):
     # OR Many-to-one
     # owner = db.relationship('Person', backref='pets')
     # person_id = db.Column(db.Integer, db.ForeignKey('person.id'))
+
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
 
 
 '''
@@ -36,7 +44,7 @@ pet.owner = data in person where id = pet.person_id
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20))
-    profile = db.relationship('Profile', backref='user', userlist=False)
+    profile = db.relationship('Profile', backref='user', uselist=False)
 
 
 class Profile(db.Model):
